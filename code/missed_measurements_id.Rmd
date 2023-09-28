@@ -1,0 +1,471 @@
+---
+title: "Reduced number of patients with RF measurements due to Covid-19"
+author: 'Fred Ho'
+output:
+  html_document:
+    df_print: paged
+---
+
+# Import data
+
+Data was curated in Databrick. All participants that had the corresponding risk factors in the GDPPR were included to count number of individuals by year.
+
+```{r setup, include=FALSE}
+library(dbplyr)
+library(odbc)
+library(DBI)
+library(tidyverse)
+library(lubridate)
+library(lmerTest)
+library(mgcv)
+library(gtsummary)
+library(flextable)
+library(DT)
+
+pop_its <- function(x){
+  dat <- datp %>% 
+    filter(mst==x) %>% 
+    mutate(sg=factor(paste(sex, age_bin, imd_bin, sep=', ')))
+  
+  m <- gam(num ~ t*sg + 
+             si + lc + tc*sg + 
+             s(month, bs='cp', k=4) + sex + age_gp + imd19_q10, 
+           data=dat)
+  return(m)
+}
+
+knitr::opts_chunk$set(dev=c('png', "tiff"), 
+                      dev.args=list(tiff=list(compression="lzw")),
+                      dpi=300)
+
+```
+
+```{r data, include=F}
+
+source('si.R')
+
+con <- DBI::dbConnect(odbc:::odbc(), "databricks")
+
+datp <- tbl(con, in_schema('dars_nic_391419_j3w9t_collab', 
+                           'ccu008_all_fh_160623')) %>% 
+  collect()
+sum(datp$n)
+
+datp <- datp %>% 
+  filter((year>=2019 | (year==2018 & month>=10)) & 
+           (year<=2022 | (year==2023 & month<=4))) 
+sum(datp$n)
+
+datp <- datp %>% 
+  rename(avg=mean, num=n_id) %>% 
+  mutate(num=as.integer(num)) %>% 
+  group_by(mst, year, month, sex, age_gp, imd19_q10) %>% 
+  summarise(num=sum(num), .groups='drop') %>% 
+  mutate(
+    t = (year - 2018) + (month - 10)/12, 
+    ld=if_else((year==2020 & month %in% c(4:6, 11)) | 
+                 (year==2021 & month %in% c(1:3)) , 1, 0), 
+    lc=if_else(year > 2020 | (year==2020 & month > 3) , 1, 0), 
+    tc=if_else(year > 2020 | (year==2020 & month > 3), (year-2020) + (month-3)/12, 0), 
+    age_bin=if_else(age_gp %in% c('18-39', '40-59'), '18-59', '>=60'), 
+    imd_bin=if_else(imd19_q10 <= 5, 'Low', 'High')
+  ) %>% 
+  left_join(si, by=c('year', 'month')) %>% 
+  mutate(
+    si=if_else(is.na(si), 0, si)/100
+  )
+
+```
+
+```{r model, echo=T}
+
+out_pop <- tibble(
+  mst=c('bmi',  'cig',  'alco', 
+        'sbp',  'dbp',  'a1c',  'fg',   
+        'chol', 'ldl',  'hdl',  'tg',   
+        'ast',  'alt',  'ggt'))
+out_pop <- out_pop %>% 
+  mutate(its=map(.x=mst, .f=pop_its)) 
+
+```
+
+```{r}
+
+tbl_merge(
+  list(out_pop$its[[1]] %>% tbl_regression(), 
+       out_pop$its[[2]] %>% tbl_regression(), 
+       out_pop$its[[3]] %>% tbl_regression()), 
+  tab_spanner=c('BMI', 'Cig', 'Alc')) 
+
+tbl_merge(
+  list(out_pop$its[[4]] %>% tbl_regression(), 
+       out_pop$its[[5]] %>% tbl_regression(), 
+       out_pop$its[[6]] %>% tbl_regression(), 
+       out_pop$its[[7]] %>% tbl_regression()), 
+  tab_spanner=c('SBP', 'DBP', 'A1c', 'Glu'))
+
+tbl_merge(
+  list(out_pop$its[[8]] %>% tbl_regression(), 
+       out_pop$its[[9]] %>% tbl_regression(), 
+       out_pop$its[[10]] %>% tbl_regression(), 
+       out_pop$its[[11]] %>% tbl_regression()), 
+  tab_spanner=c('Chol', 'LDL-c', 'HDL-c', 'TG'))
+
+tbl_merge(
+  list(out_pop$its[[12]] %>% tbl_regression(), 
+       out_pop$its[[13]] %>% tbl_regression(), 
+       out_pop$its[[14]] %>% tbl_regression()), 
+  tab_spanner=c('AST', 'ALT', 'GGT')) 
+
+```
+
+
+# Missed measurements
+
+Estimate missed RF measurements in GDPPR using interrupted time series models to predict counterfactual number of individuals. ITS models include time trend prior to covid, Oxford stringency index, and change in time change since Covid.
+
+Missed measurements is calcuated as observed number of measurement - counterfactual number of individuals as if stringency index = 0 and there's no trend change.
+
+## Create counterfactual dataframe for prediction
+
+```{r df_for_prediction, echo=T}
+
+dat_predict <- expand_grid(
+  year=2018:2023, 
+  month=1:12
+) %>% 
+  mutate(
+    t = (year - 2018) + (month - 10)/12
+  ) %>% 
+  filter(
+    (year>=2019 | (year==2018 & month>=10)) & 
+      (year<=2022 | (year==2023 & month<=4))) %>% 
+  expand_grid(
+    sex=as.character(c(1, 2)), 
+    age_gp=c('18-39', '40-59', '60-79', '80+'), 
+    imd19_q10=1:10
+  ) %>% 
+  mutate(
+    scenario='Counterfactual', 
+    si=0, ld=0, lc=0, tc=0, 
+    age_bin=if_else(age_gp %in% c('18-39', '40-59'), '18-59', '>=60'), 
+    imd_bin=if_else(imd19_q10 <= 5, 'Low', 'High'), 
+    sg=factor(paste(sex, age_bin, imd_bin, sep=', '))
+  )
+
+dat_predict <- dat_predict %>% 
+  bind_rows(
+    dat_predict %>% 
+      mutate(
+        scenario='Fitted', 
+        ld=if_else((year==2020 & month %in% c(4:6, 11)) | 
+                     (year==2021 & month %in% c(1:3)) , 1, 0), 
+        lc=if_else(year > 2020 | (year==2020 & month > 3) , 1, 0), 
+        tc=if_else(year > 2020 | (year==2020 & month > 3), (year-2020) + (month-3)/12, 0)
+      )) 
+```
+
+## Extract fitted/predicted values
+
+```{r df_predicted, echo=T}
+datp_all <- NULL
+
+for (i in 1:14){
+  
+  dat_temp <- dat_predict %>% 
+    mutate(
+      num    =predict(out_pop$its[[i]], newdata=dat_predict),
+      num.se =predict(out_pop$its[[i]], newdata=dat_predict, se.fit=T)$se.fit,
+      num.uci=(num + 1.96*num.se),
+      num.lci=(num - 1.96*num.se),
+      num    =(num)
+    )
+  
+  dat_temp <- dat_temp %>% 
+    bind_rows(
+      datp %>% 
+        filter(mst==out_pop$mst[i]) %>% 
+        group_by(year, month, t, 
+                 sex, age_bin, imd_bin) %>% 
+        summarise(num=sum(num), .groups='drop') %>% 
+        mutate(scenario='Observed')
+    ) %>% 
+    mutate(mst=out_pop$mst[[i]])
+  
+  datp_all <- bind_rows(datp_all, dat_temp)
+}
+
+rm(i, dat_temp)
+
+```
+
+## Create overall table
+
+```{r table_for_plots, echo=T}
+tab_long <- datp_all %>% 
+  group_by(
+    mst, year, month, t, scenario, 
+    sex, age_bin, imd_bin) %>% 
+  summarise(
+    num=sum(num) / 100000, 
+    num.lci=sum(num.lci) / 100000, 
+    num.uci=sum(num.uci) / 100000, 
+    .groups='drop'
+  ) %>% 
+  mutate(
+    mst=factor(mst, 
+               levels=c('bmi' , 'cig', 'alco', 
+                        'sbp' , 'dbp', 'a1c' , 'fg', 
+                        'chol', 'ldl', 'hdl' , 'tg', 
+                        'ast' , 'alt', 'ggt'         ), 
+               labels=c('BMI', 'Cigarette smoking', 'Alcohol consumption', 
+                        'SBP', 'DBP', 'HbA1c', 'Fasting glucose', 
+                        'Total cholesterol', 'LDL-c', 'HDL-c', 'Triglycerides', 
+                        'AST', 'ALT', 'GGT')), 
+    date=dmy(paste('15', month, year, sep='-'))
+  ) %>% 
+  filter(!(year==2023 & month==5))
+```
+
+# Plot overall trends
+
+```{r descriptive_stats}
+
+tab_long %>% 
+  filter(scenario=='Observed') %>% 
+  summarise(total_num=sum(num*100000))
+
+```
+
+
+Plot trends of observed and counterfactual measurements 
+
+```{r trend, fig.dim=c(10, 8), echo=T}
+
+ggplot(tab_long %>% 
+         group_by(mst, date, scenario) %>% 
+         summarise(
+           num=sum(num), 
+           num.lci=sum(num.lci), 
+           num.uci=sum(num.uci), 
+           .groups='drop'
+         ) %>% 
+         filter(scenario!='Fitted'), 
+       aes(x=date, y=num, colour=scenario)) + 
+  geom_line() + 
+  ylab('number of individuals (\'00,000)') + xlab('') + 
+  scale_color_discrete(name='') + 
+  facet_wrap(vars(mst), scales='free') 
+```
+
+# Plot missed measurements
+
+Plot missed measurements by time and subgropus.
+
+```{r data_gap_sb, include=F}
+
+tab_missed <- tab_long %>% 
+  filter(scenario!='Fitted' & date >= ymd('2020-04-01')) %>% 
+  select(mst, date, sex, age_bin, imd_bin, scenario, starts_with('num')) %>% 
+  pivot_wider(id_cols=c(mst, date, sex, age_bin, imd_bin), 
+              names_from=scenario, 
+              values_from=num:num.uci) %>% 
+  transmute(
+    mst, date, date, sex, age_bin, imd_bin, 
+    diff     = num_Observed - num_Counterfactual    , 
+    diff.lci = num_Observed - num.lci_Counterfactual, 
+    diff.uci = num_Observed - num.uci_Counterfactual, 
+  )
+```
+
+## Overall
+
+```{r plot_missed, fig.dim=c(10, 8), echo=T}
+ggplot(tab_missed %>% 
+         group_by(mst, date) %>% 
+         summarise(
+           diff=sum(diff), 
+           diff.lci=sum(diff.lci), 
+           diff.uci=sum(diff.uci), 
+           .groups='drop'), 
+       aes(x=date, y=diff)) + 
+  geom_hline(yintercept=0, linetype=2) + 
+  geom_ribbon(alpha=0.3, aes(ymin=diff.lci, ymax=diff.uci)) +
+  geom_line() + 
+  xlim(ymd('2020-01-01', '2023-04-30')) + 
+  ylab('Reduced number of individuals (\'00,000)') + xlab('') + 
+  facet_wrap(vars(mst), scales='free')
+```
+
+## By age
+
+```{r plot_missed_age, fig.dim=c(10, 8), echo=T}
+ggplot(tab_missed %>% 
+         group_by(mst, date, age_bin) %>% 
+         summarise(
+           diff=sum(diff), 
+           diff.lci=sum(diff.lci), 
+           diff.uci=sum(diff.uci), 
+           .groups='drop'), 
+       aes(x=date, y=diff)) + 
+  geom_hline(yintercept=0, linetype=2) + 
+  geom_ribbon(alpha=0.3, aes(ymin=diff.lci, ymax=diff.uci, fill=age_bin)) +
+  geom_line(aes(colour=age_bin)) + 
+  xlim(ymd('2020-01-01', '2023-04-30')) + 
+  ylab('Reduced number of individuals (\'00,000)') + xlab('') + 
+  scale_color_discrete(name='Age') + scale_fill_discrete(name='Age') + 
+  facet_wrap(vars(mst), scales='free')
+```
+
+## By sex
+
+```{r plot_missed_sex, fig.dim=c(10, 8), echo=T}
+ggplot(tab_missed %>% 
+         group_by(mst, date, sex) %>% 
+         summarise(
+           diff=sum(diff), 
+           diff.lci=sum(diff.lci), 
+           diff.uci=sum(diff.uci), 
+           .groups='drop') %>% 
+         mutate(sex=factor(sex, levels=2:1, labels=c('Female', 'Male'))), 
+       aes(x=date, y=diff)) + 
+  geom_hline(yintercept=0, linetype=2) + 
+  geom_ribbon(alpha=0.3, aes(ymin=diff.lci, ymax=diff.uci, fill=sex)) +
+  geom_line(aes(colour=sex)) + 
+  xlim(ymd('2020-01-01', '2023-04-30')) + 
+  ylab('Reduced number of individuals (\'00,000)') + xlab('') + 
+  scale_color_discrete(name='Sex') + scale_fill_discrete(name='Sex') + 
+  facet_wrap(vars(mst), scales='free')
+```
+
+## By IMD
+
+```{r plot_missed_imd, fig.dim=c(10, 8), echo=T}
+ggplot(tab_missed %>% 
+         group_by(mst, date, imd_bin) %>% 
+         summarise(
+           diff=sum(diff), 
+           diff.lci=sum(diff.lci), 
+           diff.uci=sum(diff.uci), 
+           .groups='drop'), 
+       aes(x=date, y=diff)) + 
+  geom_hline(yintercept=0, linetype=2) + 
+  geom_ribbon(alpha=0.3, aes(ymin=diff.lci, ymax=diff.uci, fill=imd_bin)) +
+  geom_line(aes(colour=imd_bin)) + 
+  xlim(ymd('2020-01-01', '2023-04-30')) + 
+  ylab('Reduced number of individuals (\'00,000)') + xlab('') + 
+  scale_color_discrete(name='Deprivation') + scale_fill_discrete(name='Deprivation') + 
+  facet_wrap(vars(mst), scales='free')
+```
+
+# Calculate total missed measurements
+
+Tables of total missed measurements were calculated for three periods:
+
+1.  Lockdown (from first to last national LD in May 2021)
+2.  Post-lockdown (from May 2021 to end of all restrictions in Feb 2022)
+3.  Post-restriction (since Feb 2022)
+
+All numbers shown are in multiples of 100,000. 
+
+SUM = total number in that period. 
+MON = monthly number in that period. 
+LCI/UCI = 95% CI
+
+
+```{r table_missed, echo=T}
+tab_sum <- tab_missed %>% 
+  mutate(
+    period=case_when(
+      date <= ymd('2021-06-01') ~ 'Lockdown', 
+      date <= ymd('2022-03-01') ~ 'Post-lockdown', 
+      TRUE                      ~ 'Post-restrictions'
+    )
+  ) %>% 
+  group_by(mst, period, sex, age_bin, imd_bin) %>% 
+  summarise(
+    sum=sum(diff), sum_lci=sum(diff.lci), sum_uci=sum(diff.uci), 
+    mon=sum(diff)/n(), mon_lci=sum(diff.lci)/n(), mon_uci=sum(diff.uci)/n(), 
+    .groups='drop'
+  )
+```
+
+## Overall
+
+```{r table_missed_overall, echo=T}
+tab_sum %>% 
+  group_by(mst, period) %>% 
+  summarise(
+    sum=sum(sum), sum_lci=sum(sum_lci), sum_uci=sum(sum_uci), 
+    mon=sum(mon), mon_lci=sum(mon_lci), mon_uci=sum(mon_uci), 
+    .groups='drop'
+  ) %>% 
+  mutate(
+    across(sum:mon_uci, function(.x) round(.x, 2)), 
+  ) %>%
+  datatable(extensions = 'Buttons',
+            options = list(dom = 'Blfrtip',
+                           buttons = c('copy', 'csv', 'excel'),
+                           lengthMenu = list(c(10,25,50,-1),
+                                             c(10,25,50,"All"))))
+```
+
+## By age
+
+```{r table_missed_age, echo=T}
+tab_sum %>% 
+  group_by(mst, period, age_bin) %>% 
+  summarise(
+    sum=sum(sum), sum_lci=sum(sum_lci), sum_uci=sum(sum_uci), 
+    mon=sum(mon), mon_lci=sum(mon_lci), mon_uci=sum(mon_uci), 
+    .groups='drop'
+  ) %>% 
+  mutate(
+    across(sum:mon_uci, function(.x) round(.x, 2)), 
+  ) %>%
+  datatable(extensions = 'Buttons',
+            options = list(dom = 'Blfrtip',
+                           buttons = c('copy', 'csv', 'excel'),
+                           lengthMenu = list(c(10,25,50,-1),
+                                             c(10,25,50,"All"))))
+```
+
+## By sex
+
+```{r table_missed_sex, echo=T}
+tab_sum %>% 
+  group_by(mst, period, sex) %>% 
+  summarise(
+    sum=sum(sum), sum_lci=sum(sum_lci), sum_uci=sum(sum_uci), 
+    mon=sum(mon), mon_lci=sum(mon_lci), mon_uci=sum(mon_uci), 
+    .groups='drop'
+  ) %>% 
+  mutate(
+    across(sum:mon_uci, function(.x) round(.x, 2)), 
+  ) %>%
+  datatable(extensions = 'Buttons',
+            options = list(dom = 'Blfrtip',
+                           buttons = c('copy', 'csv', 'excel'),
+                           lengthMenu = list(c(10,25,50,-1),
+                                             c(10,25,50,"All"))))
+```
+
+## By IMD
+
+```{r table_missed_imd, echo=T}
+tab_sum %>% 
+  group_by(mst, period, imd_bin) %>% 
+  summarise(
+    sum=sum(sum), sum_lci=sum(sum_lci), sum_uci=sum(sum_uci), 
+    mon=sum(mon), mon_lci=sum(mon_lci), mon_uci=sum(mon_uci), 
+    .groups='drop'
+  ) %>% 
+  mutate(
+    across(sum:mon_uci, function(.x) round(.x, 2)), 
+  ) %>%
+  datatable(extensions = 'Buttons',
+            options = list(dom = 'Blfrtip',
+                           buttons = c('copy', 'csv', 'excel'),
+                           lengthMenu = list(c(10,25,50,-1),
+                                             c(10,25,50,"All"))))
+```
