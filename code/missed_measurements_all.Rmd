@@ -77,6 +77,7 @@ datp <- datp %>%
 
 ```
 
+
 ```{r model, echo=T}
 
 out_pop <- tibble(
@@ -89,13 +90,13 @@ out_pop <- out_pop %>%
 
 ```
 
-```{r, echo=T}
+```{r}
 
 tbl_merge(
   list(out_pop$its[[1]] %>% tbl_regression(), 
        out_pop$its[[2]] %>% tbl_regression(), 
        out_pop$its[[3]] %>% tbl_regression()), 
-  tab_spanner=c('BMI', 'Cig', 'Alc'))
+  tab_spanner=c('BMI', 'Cig', 'Alc')) 
 
 tbl_merge(
   list(out_pop$its[[4]] %>% tbl_regression(), 
@@ -115,7 +116,7 @@ tbl_merge(
   list(out_pop$its[[12]] %>% tbl_regression(), 
        out_pop$its[[13]] %>% tbl_regression(), 
        out_pop$its[[14]] %>% tbl_regression()), 
-  tab_spanner=c('AST', 'ALT', 'GGT'))
+  tab_spanner=c('AST', 'ALT', 'GGT')) 
 
 ```
 
@@ -229,7 +230,7 @@ tab_long <- datp_all %>%
 
 # Plot overall trends
 
-```{r descriptive_stats, echo=T}
+```{r descriptive_stats}
 
 tab_long %>% 
   filter(scenario=='Observed') %>% 
@@ -240,7 +241,7 @@ tab_long %>%
 
 Plot trends of observed and counterfactual measurements 
 
-```{r trend, fig.dim=c(10, 8), echo=T}
+```{r trend, fig.dim=c(10, 8), echo=T, warning=TRUE}
 
 ggplot(tab_long %>% 
          group_by(mst, date, scenario) %>% 
@@ -251,14 +252,15 @@ ggplot(tab_long %>%
            .groups='drop'
          ) %>% 
          filter(scenario!='Fitted'), 
-       aes(x=date, y=num, colour=scenario)) + 
-  geom_line() + 
-  ylab('Number of measurements (\'00,000)') + xlab('') + 
-  scale_color_discrete(name='') + 
+       aes(x=date, y=num)) + 
+  geom_ribbon(aes(ymin=num.lci, ymax=num.uci, fill=scenario), alpha=0.3) + 
+  geom_line(aes(colour=scenario)) + 
+  scale_color_discrete(name='') + scale_fill_discrete(name='') +  
+  ylab('number of measurements (\'00,000)') + xlab('') + 
   facet_wrap(vars(mst), scales='free') 
 ```
 
-# Plot missed measurements
+# Plot missed measurements (number)
 
 Plot missed measurements by time and subgropus.
 
@@ -275,6 +277,12 @@ tab_missed <- tab_long %>%
     diff     = num_Observed - num_Counterfactual    , 
     diff.lci = num_Observed - num.lci_Counterfactual, 
     diff.uci = num_Observed - num.uci_Counterfactual, 
+    obs      = num_Observed    , 
+    obs.lci  = num_Observed, 
+    obs.uci  = num_Observed, 
+    exp      = num_Counterfactual    , 
+    exp.lci  = num.lci_Counterfactual, 
+    exp.uci  = num.uci_Counterfactual, 
   )
 ```
 
@@ -303,7 +311,7 @@ ggplot(tab_missed %>%
 ggplot(tab_missed %>% 
          group_by(mst, date, age_bin) %>% 
          summarise(
-           diff=sum(diff), 
+           diff=sum(diff)        , 
            diff.lci=sum(diff.lci), 
            diff.uci=sum(diff.uci), 
            .groups='drop'), 
@@ -358,13 +366,99 @@ ggplot(tab_missed %>%
   facet_wrap(vars(mst), scales='free')
 ```
 
-# Calculate total missed measurements
+
+# Plot missed measurements (%)
+
+As in previous section but in %s
+
+## Overall
+
+```{r plot_missed_pc, fig.dim=c(10, 8), echo=T}
+ggplot(tab_missed %>% 
+         group_by(mst, date) %>% 
+         summarise(
+           diff    =sum(diff    ) / sum(exp    ) * 100,         
+           diff.lci=sum(diff.lci) / sum(exp.lci) * 100, 
+           diff.uci=sum(diff.uci) / sum(exp.uci) * 100, 
+           .groups='drop'), 
+       aes(x=date, y=diff)) + 
+  geom_hline(yintercept=0, linetype=2) + 
+  geom_ribbon(alpha=0.3, aes(ymin=diff.lci, ymax=diff.uci)) +
+  geom_line() + 
+  xlim(ymd('2020-01-01', '2023-04-30')) + 
+  ylab('Reduced number of measurements (%)') + xlab('') + 
+  facet_wrap(vars(mst), scales='free')
+```
+
+## By age
+
+```{r plot_missed_age_pc, fig.dim=c(10, 8), echo=T}
+ggplot(tab_missed %>% 
+         group_by(mst, date, age_bin) %>% 
+         summarise(
+           diff    =sum(diff    ) / sum(exp    ) * 100,         
+           diff.lci=sum(diff.lci) / sum(exp.lci) * 100, 
+           diff.uci=sum(diff.uci) / sum(exp.uci) * 100, 
+           .groups='drop'), 
+       aes(x=date, y=diff)) + 
+  geom_hline(yintercept=0, linetype=2) + 
+  geom_ribbon(alpha=0.3, aes(ymin=diff.lci, ymax=diff.uci, fill=age_bin)) +
+  geom_line(aes(colour=age_bin)) + 
+  xlim(ymd('2020-01-01', '2023-04-30')) + 
+  ylab('Reduced number of measurements (%)') + xlab('') + 
+  scale_color_discrete(name='Age') + scale_fill_discrete(name='Age') + 
+  facet_wrap(vars(mst), scales='free')
+```
+
+## By sex
+
+```{r plot_missed_sex_pc, fig.dim=c(10, 8), echo=T}
+ggplot(tab_missed %>% 
+         group_by(mst, date, sex) %>% 
+         summarise(
+           diff    =sum(diff    ) / sum(exp    ) * 100,
+           diff.lci=sum(diff.lci) / sum(exp.lci) * 100,
+           diff.uci=sum(diff.uci) / sum(exp.uci) * 100,
+           .groups='drop') %>% 
+         mutate(sex=factor(sex, levels=2:1, labels=c('Female', 'Male'))), 
+       aes(x=date, y=diff)) + 
+  geom_hline(yintercept=0, linetype=2) + 
+  geom_ribbon(alpha=0.3, aes(ymin=diff.lci, ymax=diff.uci, fill=sex)) +
+  geom_line(aes(colour=sex)) + 
+  xlim(ymd('2020-01-01', '2023-04-30')) + 
+  ylab('Reduced number of measurements (%)') + xlab('') + 
+  scale_color_discrete(name='Sex') + scale_fill_discrete(name='Sex') + 
+  facet_wrap(vars(mst), scales='free')
+```
+
+## By IMD
+
+```{r plot_missed_imd_pc, fig.dim=c(10, 8), echo=T}
+ggplot(tab_missed %>% 
+         group_by(mst, date, imd_bin) %>% 
+         summarise(
+           diff    =sum(diff    ) / sum(exp    ) * 100,         
+           diff.lci=sum(diff.lci) / sum(exp.lci) * 100, 
+           diff.uci=sum(diff.uci) / sum(exp.uci) * 100, 
+           .groups='drop'), 
+       aes(x=date, y=diff)) + 
+  geom_hline(yintercept=0, linetype=2) + 
+  geom_ribbon(alpha=0.3, aes(ymin=diff.lci, ymax=diff.uci, fill=imd_bin)) +
+  geom_line(aes(colour=imd_bin)) + 
+  xlim(ymd('2020-01-01', '2023-04-30')) + 
+  ylab('Reduced number of measurements (%)') + xlab('') + 
+  scale_color_discrete(name='Deprivation') + scale_fill_discrete(name='Deprivation') + 
+  facet_wrap(vars(mst), scales='free')
+```
+
+# Calculate missed measurements (n & %)
 
 Tables of total missed measurements were calculated for three periods:
 
-1.  Lockdown (from first to last national LD in May 2021)
-2.  Post-lockdown (from May 2021 to end of all restrictions in Feb 2022)
-3.  Post-restriction (since Feb 2022)
+<!-- 1.  Lockdown (from first to last national LD in May 2021) -->
+<!-- 2.  Post-lockdown (from May 2021 to end of all restrictions in Feb 2022) -->
+1.  Lockdown & restrictions (Up to Feb 2022)
+3.  Post-restriction (since March 2022)
 
 All numbers shown are in multiples of 100,000. 
 
@@ -377,8 +471,7 @@ LCI/UCI = 95% CI
 tab_sum <- tab_missed %>% 
   mutate(
     period=case_when(
-      date <= ymd('2021-06-01') ~ 'Lockdown', 
-      date <= ymd('2022-03-01') ~ 'Post-lockdown', 
+      date <= ymd('2022-03-01') ~ 'Restrictions', 
       TRUE                      ~ 'Post-restrictions'
     )
   ) %>% 
@@ -386,86 +479,80 @@ tab_sum <- tab_missed %>%
   summarise(
     sum=sum(diff), sum_lci=sum(diff.lci), sum_uci=sum(diff.uci), 
     mon=sum(diff)/n(), mon_lci=sum(diff.lci)/n(), mon_uci=sum(diff.uci)/n(), 
+    exp=sum(exp), exp_lci=sum(exp.lci), exp_uci=sum(exp.uci), 
     .groups='drop'
   )
 ```
 
 ## Overall
 
-```{r table_missed_overall, echo=T}
-tab_sum %>% 
-  group_by(mst, period) %>% 
-  summarise(
-    sum=sum(sum), sum_lci=sum(sum_lci), sum_uci=sum(sum_uci), 
-    mon=sum(mon), mon_lci=sum(mon_lci), mon_uci=sum(mon_uci), 
-    .groups='drop'
-  ) %>% 
-  mutate(
-    across(sum:mon_uci, function(.x) round(.x, 2)), 
-  ) %>%
-  datatable(extensions = 'Buttons',
-            options = list(dom = 'Blfrtip',
-                           buttons = c('copy', 'csv', 'excel'),
-                           lengthMenu = list(c(10,25,50,-1),
-                                             c(10,25,50,"All"))))
+```{r table_missed_overall, echo=F}
+
+tab_summary <- bind_rows(
+  tab_sum %>% 
+    group_by(mst, period) %>% 
+    summarise(
+      mon=sum(mon), mon_lci=sum(mon_lci), mon_uci=sum(mon_uci), 
+      pc    =sum(sum)    /sum(exp)     *100, 
+      pc_lci=sum(sum_lci)/sum(exp_lci) *100, 
+      pc_uci=sum(sum_uci)/sum(exp_uci) *100, 
+      .groups='drop'
+    ) %>% 
+    mutate(
+      across(mon:pc_uci, function(.x) round(.x, 2)), 
+      sb='overall'
+    ), 
+  tab_sum %>% 
+    group_by(mst, period, age_bin) %>% 
+    summarise(
+      mon=sum(mon), mon_lci=sum(mon_lci), mon_uci=sum(mon_uci), 
+      pc    =sum(sum)    /sum(exp)     *100, 
+      pc_lci=sum(sum_lci)/sum(exp_lci) *100, 
+      pc_uci=sum(sum_uci)/sum(exp_uci) *100, 
+      .groups='drop'
+    ) %>% 
+    mutate(
+      across(mon:pc_uci, function(.x) round(.x, 2)), 
+    ) %>% 
+    rename(sb=age_bin), 
+  tab_sum %>% 
+    group_by(mst, period, sex) %>% 
+    summarise(
+      mon=sum(mon), mon_lci=sum(mon_lci), mon_uci=sum(mon_uci), 
+      pc    =sum(sum)    /sum(exp)     *100, 
+      pc_lci=sum(sum_lci)/sum(exp_lci) *100, 
+      pc_uci=sum(sum_uci)/sum(exp_uci) *100, 
+      .groups='drop'
+    ) %>% 
+    mutate(
+      across(mon:pc_uci, function(.x) round(.x, 2)), 
+    ) %>% 
+    rename(sb=sex), 
+  tab_sum %>% 
+    group_by(mst, period, imd_bin) %>% 
+    summarise(
+      mon=sum(mon), mon_lci=sum(mon_lci), mon_uci=sum(mon_uci), 
+      pc    =sum(sum)    /sum(exp)     *100, 
+      pc_lci=sum(sum_lci)/sum(exp_lci) *100, 
+      pc_uci=sum(sum_uci)/sum(exp_uci) *100, 
+      .groups='drop'
+    ) %>% 
+    mutate(
+      across(mon:pc_uci, function(.x) round(.x, 2)), 
+    )  %>% 
+    rename(sb=imd_bin)
+)
 ```
 
-## By age
+```{r table_missed_overall_format, echo=F}
 
-```{r table_missed_age, echo=T}
-tab_sum %>% 
-  group_by(mst, period, age_bin) %>% 
-  summarise(
-    sum=sum(sum), sum_lci=sum(sum_lci), sum_uci=sum(sum_uci), 
-    mon=sum(mon), mon_lci=sum(mon_lci), mon_uci=sum(mon_uci), 
-    .groups='drop'
-  ) %>% 
-  mutate(
-    across(sum:mon_uci, function(.x) round(.x, 2)), 
-  ) %>%
-  datatable(extensions = 'Buttons',
-            options = list(dom = 'Blfrtip',
-                           buttons = c('copy', 'csv', 'excel'),
-                           lengthMenu = list(c(10,25,50,-1),
-                                             c(10,25,50,"All"))))
-```
+tab_summary %>% 
+    mutate(
+        num=paste0(format(mon, nsmall=2), " (", format(mon_lci, nsmall=2), ", ", format(mon_uci, nsmall=2), ")"), 
+        pct=paste0(format(pc , nsmall=2), " (", format(pc_lci , nsmall=2), ", ", format(pc_uci , nsmall=2), ")")) %>% 
+    select(-(mon:pc_uci)) %>% 
+    pivot_wider(id_cols = mst:period, names_from=sb, values_from=num:pct) %>% 
+    arrange(desc(period)) %>% 
+  write_csv('Y:/table1_missed_measurements.csv')
 
-## By sex
-
-```{r table_missed_sex, echo=T}
-tab_sum %>% 
-  group_by(mst, period, sex) %>% 
-  summarise(
-    sum=sum(sum), sum_lci=sum(sum_lci), sum_uci=sum(sum_uci), 
-    mon=sum(mon), mon_lci=sum(mon_lci), mon_uci=sum(mon_uci), 
-    .groups='drop'
-  ) %>% 
-  mutate(
-    across(sum:mon_uci, function(.x) round(.x, 2)), 
-  ) %>%
-  datatable(extensions = 'Buttons',
-            options = list(dom = 'Blfrtip',
-                           buttons = c('copy', 'csv', 'excel'),
-                           lengthMenu = list(c(10,25,50,-1),
-                                             c(10,25,50,"All"))))
-```
-
-## By IMD
-
-```{r table_missed_imd, echo=T}
-tab_sum %>% 
-  group_by(mst, period, imd_bin) %>% 
-  summarise(
-    sum=sum(sum), sum_lci=sum(sum_lci), sum_uci=sum(sum_uci), 
-    mon=sum(mon), mon_lci=sum(mon_lci), mon_uci=sum(mon_uci), 
-    .groups='drop'
-  ) %>% 
-  mutate(
-    across(sum:mon_uci, function(.x) round(.x, 2)), 
-  ) %>%
-  datatable(extensions = 'Buttons',
-            options = list(dom = 'Blfrtip',
-                           buttons = c('copy', 'csv', 'excel'),
-                           lengthMenu = list(c(10,25,50,-1),
-                                             c(10,25,50,"All"))))
 ```
