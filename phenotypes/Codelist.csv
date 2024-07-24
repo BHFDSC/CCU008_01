@@ -1,0 +1,368 @@
+Cluster_ID,ConceptId,ConceptId_Description,rf
+NDABMI_COD,162764001,On examination - weight greater than 20% below ideal (finding),BMI
+NDABMI_COD,162765000,On examination - weight 10-20% below ideal (finding),BMI
+NDABMI_COD,162769006,On examination - Underweight (finding),BMI
+NDABMI_COD,238131007,Overweight (finding),BMI
+NDABMI_COD,248342006,Underweight (finding),BMI
+NDABMI_COD,268915006,On examination - weight 10-20% over ideal (finding),BMI
+NDABMI_COD,268916007,On examination - weight greater than 20% over ideal (finding),BMI
+NDABMI_COD,275947003,On examination - overweight (finding),BMI
+NDABMI_COD,715456008,Percentage median body mass index for age and sex (observable entity),BMI
+NDABMI_COD,162863004,Body mass index 25-29 - overweight (finding),BMI
+NDABMI_COD,162864005,Body mass index 30+ - obesity (finding),BMI
+NDABMI_COD,301331008,Finding of body mass index (finding),BMI
+NDABMI_COD,310252000,Body mass index less than 20 (finding),BMI
+NDABMI_COD,35425004,Normal body mass index (finding),BMI
+NDABMI_COD,408512008,Body mass index 40+ - severely obese (finding),BMI
+NDABMI_COD,412768003,Body mass index 20-24 - normal (finding),BMI
+NDABMI_COD,427090001,Body mass index less than 16.5 (finding),BMI
+NDABMI_COD,443371000124107,Obese class I (finding),BMI
+NDABMI_COD,443381000124105,Obese class II (finding),BMI
+NDABMI_COD,48499001,Increased body mass index (finding),BMI
+NDABMI_COD,60621009,Body mass index (observable entity),BMI
+NDABMI_COD,6497000,Decreased body mass index (finding),BMI
+NDABMI_COD,722595002,Overweight in adulthood with body mass index of 25 or more but less than 30 (finding),BMI
+NDABMI_COD,846931000000101,Baseline body mass index (observable entity),BMI
+NDABMI_COD,914721000000105,Obese class I (body mass index 30.0 - 34.9) (finding),BMI
+NDABMI_COD,914731000000107,Obese class II (body mass index 35.0 - 39.9) (finding),BMI
+NDABMI_COD,914741000000103,Obese class III (body mass index equal to or greater than 40.0) (finding),BMI
+NDABMI_COD,819948005,Obese class III (finding),BMI
+NDABMI_COD,162690006,On examination - obese (finding),BMI
+NDABMI_COD,190966007,Extreme obesity with alveolar hypoventilation (disorder),BMI
+NDABMI_COD,414915002,Obese (finding),BMI
+NDASMOK_COD,105539002,Non-smoker for personal reasons (finding),Smoking
+NDASMOK_COD,105540000,Non-smoker for religious reasons (finding),Smoking
+NDASMOK_COD,105541001,Non-smoker for medical reasons (finding),Smoking
+NDASMOK_COD,1092031000000108,Ex-smoker amount unknown (finding),Smoking
+NDASMOK_COD,1092041000000104,Ex-very heavy smoker (40+/day) (finding),Smoking
+NDASMOK_COD,1092071000000105,Ex-heavy smoker (20-39/day) (finding),Smoking
+NDASMOK_COD,1092091000000109,Ex-moderate smoker (10-19/day) (finding),Smoking
+NDASMOK_COD,1092111000000104,Ex-light smoker (1-9/day) (finding),Smoking
+NDASMOK_COD,1092131000000107,Ex-trivial smoker (<1/day) (finding),Smoking
+NDASMOK_COD,1092481000000104,Number of calculated smoking pack years (observable entity),Smoking
+NDASMOK_COD,110483000,Tobacco user (finding),Smoking
+NDASMOK_COD,134406006,Smoking reduced (finding),Smoking
+NDASMOK_COD,160603005,Light cigarette smoker (1-9 cigs/day) (finding),Smoking
+NDASMOK_COD,160604004,Moderate cigarette smoker (10-19 cigs/day) (finding),Smoking
+NDASMOK_COD,160605003,Heavy cigarette smoker (20-39 cigs/day) (finding),Smoking
+NDASMOK_COD,160606002,Very heavy cigarette smoker (40+ cigs/day) (finding),Smoking
+NDASMOK_COD,160612007,Keeps trying to stop smoking (finding),Smoking
+NDASMOK_COD,160613002,Admitted tobacco consumption possibly untrue (finding),Smoking
+NDASMOK_COD,160616005,Trying to give up smoking (finding),Smoking
+NDASMOK_COD,160617001,Stopped smoking (finding),Smoking
+NDASMOK_COD,160618006,Current non-smoker (finding),Smoking
+NDASMOK_COD,160619003,Rolls own cigarettes (finding),Smoking
+NDASMOK_COD,160620009,Ex-pipe smoker (finding),Smoking
+NDASMOK_COD,160621008,Ex-cigar smoker (finding),Smoking
+NDASMOK_COD,160625004,Date ceased smoking (observable entity),Smoking
+NDASMOK_COD,203191000000107,Wants to stop smoking (finding),Smoking
+NDASMOK_COD,221000119102,Never smoked any substance (finding),Smoking
+NDASMOK_COD,225934006,Smokes in bed (finding),Smoking
+NDASMOK_COD,228486009,Time since stopped smoking (observable entity),Smoking
+NDASMOK_COD,230056004,Cigarette consumption (observable entity),Smoking
+NDASMOK_COD,230057008,Cigar consumption (observable entity),Smoking
+NDASMOK_COD,230058003,Pipe tobacco consumption (observable entity),Smoking
+NDASMOK_COD,230059006,Occasional cigarette smoker (finding),Smoking
+NDASMOK_COD,230060001,Light cigarette smoker (finding),Smoking
+NDASMOK_COD,230062009,Moderate cigarette smoker (finding),Smoking
+NDASMOK_COD,230063004,Heavy cigarette smoker (finding),Smoking
+NDASMOK_COD,230064005,Very heavy cigarette smoker (finding),Smoking
+NDASMOK_COD,230065006,Chain smoker (finding),Smoking
+NDASMOK_COD,266918002,Tobacco smoking consumption (observable entity),Smoking
+NDASMOK_COD,266919005,Never smoked tobacco (finding),Smoking
+NDASMOK_COD,266920004,Trivial cigarette smoker (less than one cigarette/day) (finding),Smoking
+NDASMOK_COD,266921000,Ex-trivial cigarette smoker (<1/day) (finding),Smoking
+NDASMOK_COD,266922007,Ex-light cigarette smoker (1-9/day) (finding),Smoking
+NDASMOK_COD,266923002,Ex-moderate cigarette smoker (10-19/day) (finding),Smoking
+NDASMOK_COD,266924008,Ex-heavy cigarette smoker (20-39/day) (finding),Smoking
+NDASMOK_COD,266925009,Ex-very heavy cigarette smoker (40+/day) (finding),Smoking
+NDASMOK_COD,266927001,Tobacco smoking consumption unknown (finding),Smoking
+NDASMOK_COD,266928006,Ex-cigarette smoker amount unknown (finding),Smoking
+NDASMOK_COD,266929003,Smoking started (finding),Smoking
+NDASMOK_COD,281018007,Ex-cigarette smoker (finding),Smoking
+NDASMOK_COD,308438006,Smoking restarted (finding),Smoking
+NDASMOK_COD,360890004,Intolerant ex-smoker (finding),Smoking
+NDASMOK_COD,360900008,Aggressive ex-smoker (finding),Smoking
+NDASMOK_COD,360918006,Aggressive non-smoker (finding),Smoking
+NDASMOK_COD,360929005,Intolerant non-smoker (finding),Smoking
+NDASMOK_COD,365982000,Finding of tobacco smoking consumption (finding),Smoking
+NDASMOK_COD,394871007,Thinking about stopping smoking (finding),Smoking
+NDASMOK_COD,394872000,Ready to stop smoking (finding),Smoking
+NDASMOK_COD,394873005,Not interested in stopping smoking (finding),Smoking
+NDASMOK_COD,401159003,Reason for restarting smoking (observable entity),Smoking
+NDASMOK_COD,401201003,Cigarette pack-years (observable entity),Smoking
+NDASMOK_COD,405746006,Current non smoker but past smoking history unknown (finding),Smoking
+NDASMOK_COD,413173009,Minutes from waking to first tobacco consumption (observable entity),Smoking
+NDASMOK_COD,428041000124106,Occasional tobacco smoker (finding),Smoking
+NDASMOK_COD,446172000,Failed attempt to stop smoking (finding),Smoking
+NDASMOK_COD,449345000,Smoked before confirmation of pregnancy (finding),Smoking
+NDASMOK_COD,449368009,Stopped smoking during pregnancy (finding),Smoking
+NDASMOK_COD,449369001,Stopped smoking before pregnancy (finding),Smoking
+NDASMOK_COD,449868002,Smokes tobacco daily (finding),Smoking
+NDASMOK_COD,48031000119106,Ex-smoker for more than 1 year (finding),Smoking
+NDASMOK_COD,492191000000103,Ex roll-up cigarette smoker (finding),Smoking
+NDASMOK_COD,517211000000106,Recently stopped smoking (finding),Smoking
+NDASMOK_COD,53896009,Tolerant ex-smoker (finding),Smoking
+NDASMOK_COD,56578002,Moderate smoker (20 or less per day) (finding),Smoking
+NDASMOK_COD,56771006,Heavy smoker (over 20 per day) (finding),Smoking
+NDASMOK_COD,59978006,Cigar smoker (finding),Smoking
+NDASMOK_COD,65568007,Cigarette smoker (finding),Smoking
+NDASMOK_COD,735112005,Date ceased using moist tobacco (observable entity),Smoking
+NDASMOK_COD,735128000,Ex-smoker for less than 1 year (finding),Smoking
+NDASMOK_COD,77176002,Smoker (finding),Smoking
+NDASMOK_COD,82302008,Pipe smoker (finding),Smoking
+NDASMOK_COD,836001000000109,Waterpipe tobacco consumption (observable entity),Smoking
+NDASMOK_COD,8392000,Non-smoker (finding),Smoking
+NDASMOK_COD,8517006,Ex-smoker (finding),Smoking
+NDASMOK_COD,87739003,Tolerant non-smoker (finding),Smoking
+NDASMOK_COD,782516008,Number of calculated pack years for cumulative lifetime tobacco exposure (observable entity),Smoking
+ALC_COD,105542008,Current non-drinker of alcohol (finding),Alcohol
+ALC_COD,1082631000000102,Alcohol units consumed per day (observable entity),Alcohol
+ALC_COD,1082641000000106,Alcohol units consumed per week (observable entity),Alcohol
+ALC_COD,10939881000119105,Unhealthy alcohol drinking behavior (finding),Alcohol
+ALC_COD,160573003,Alcohol intake (observable entity),Alcohol
+ALC_COD,160575005,Light drinker - 1-2u/day (finding),Alcohol
+ALC_COD,160576006,Moderate drinker - 3-6u/day (finding),Alcohol
+ALC_COD,160577002,Heavy drinker - 7-9u/day (finding),Alcohol
+ALC_COD,160578007,Very heavy drinker - greater than 9 units/day (finding),Alcohol
+ALC_COD,160579004,Stopped drinking alcohol (finding),Alcohol
+ALC_COD,160582009,Ex-trivial drinker - less than 1 unit/day (finding),Alcohol
+ALC_COD,160583004,Ex-light drinker - (1-2u/day) (finding),Alcohol
+ALC_COD,160584005,Ex-moderate drinker - (3-6u/d) (finding),Alcohol
+ALC_COD,160585006,Ex-heavy drinker - (7-9u/day) (finding),Alcohol
+ALC_COD,160587003,Ex-very heavy drinker - greater than 9 units/day (finding),Alcohol
+ALC_COD,160588008,Drinker of hard liquor (finding),Alcohol
+ALC_COD,160589000,Beer drinker (finding),Alcohol
+ALC_COD,160590009,Drinks beer and hard liquor (finding),Alcohol
+ALC_COD,160591008,Drinks wine (finding),Alcohol
+ALC_COD,160592001,Alcohol intake above recommended sensible limits (finding),Alcohol
+ALC_COD,160593006,Alcohol intake within recommended sensible limits (finding),Alcohol
+ALC_COD,198421000000108,Hazardous alcohol use (finding),Alcohol
+ALC_COD,198431000000105,Harmful alcohol use (finding),Alcohol
+ALC_COD,219006,Current drinker of alcohol (finding),Alcohol
+ALC_COD,228274009,Lifetime non-drinker (finding),Alcohol
+ALC_COD,228276006,Occasional drinker (finding),Alcohol
+ALC_COD,228277002,Light drinker (finding),Alcohol
+ALC_COD,228278007,Fairly heavy drinker (finding),Alcohol
+ALC_COD,228279004,Very heavy drinker (finding),Alcohol
+ALC_COD,228281002,Problem drinker (finding),Alcohol
+ALC_COD,228315001,Binge drinker (finding),Alcohol
+ALC_COD,228316000,Alcoholic binges exceeding sensible amounts (finding),Alcohol
+ALC_COD,228317009,Alcoholic binges exceeding safe amounts (finding),Alcohol
+ALC_COD,228326007,Drinking binge (finding),Alcohol
+ALC_COD,230085005,Beer intake (observable entity),Alcohol
+ALC_COD,230086006,Wine intake (observable entity),Alcohol
+ALC_COD,230088007,Hard liquor intake (observable entity),Alcohol
+ALC_COD,266917007,Trivial drinker - <1u/day (finding),Alcohol
+ALC_COD,28127009,Social drinker (finding),Alcohol
+ALC_COD,286857004,Ex-problem drinker (finding),Alcohol
+ALC_COD,300939009,Abstinent alcoholic (finding),Alcohol
+ALC_COD,43783005,Moderate drinker (finding),Alcohol
+ALC_COD,442547005,Number of alcohol units consumed on heaviest drinking day (observable entity),Alcohol
+ALC_COD,447087000,Drinks alcoholic cider (finding),Alcohol
+ALC_COD,748381000000102,Drinks real ale (finding),Alcohol
+ALC_COD,777631000000108,Increasing risk alcohol drinking (finding),Alcohol
+ALC_COD,777651000000101,Higher risk alcohol drinking (finding),Alcohol
+ALC_COD,777671000000105,Lower risk alcohol drinking (finding),Alcohol
+ALC_COD,82581004,Ex-drinker (finding),Alcohol
+ALC_COD,86933000,Heavy drinker (finding),Alcohol
+ALC_COD,783261004,Lifetime non-drinker of alcohol (finding),Alcohol
+ALC_COD,896792007,Cider intake (observable entity),Alcohol
+ALC_COD,896807001,Estimated volume of intake of alcoholic cider in 24 hours (observable entity),Alcohol
+ALC_COD,896808006,Estimated volume of intake of wine in 24 hours (observable entity),Alcohol
+ALC_COD,896809003,Estimated volume of intake of distilled spirits in 24 hours (observable entity),Alcohol
+ALC_COD,896812000,Estimated volume of intake of beer in 24 hours (observable entity),Alcohol
+ALC_COD,897148007,Alcoholic beverage intake (observable entity),Alcohol
+ALC_COD,926322008,Intake of distilled spirits (observable entity),Alcohol
+NDABP_COD,1091811000000102,Diastolic arterial pressure (observable entity),BP
+NDABP_COD,1105331000000106,Blood pressure measurement using oscillometric monitoring device with opportunistic atrial fibrillation detection (procedure),BP
+NDABP_COD,12763006,Decreased blood pressure (finding),BP
+NDABP_COD,12929001,Normal systolic arterial pressure (finding),BP
+NDABP_COD,163020007,On examination - blood pressure reading (finding),BP
+NDABP_COD,163022004,On examination - blood pressure reading very low (disorder),BP
+NDABP_COD,163023009,On examination - blood pressure reading low (disorder),BP
+NDABP_COD,163024003,On examination - blood pressure borderline low (disorder),BP
+NDABP_COD,163025002,On examination - blood pressure reading normal (finding),BP
+NDABP_COD,163026001,On examination - blood pressure borderline raised (finding),BP
+NDABP_COD,163027005,On examination - blood pressure reading raised (finding),BP
+NDABP_COD,163028000,On examination - blood pressure reading very high (finding),BP
+NDABP_COD,163029008,On examination - blood pressure reading: postural drop (finding),BP
+NDABP_COD,163030003,On examination - Systolic blood pressure reading (finding),BP
+NDABP_COD,163031004,On examination - Diastolic blood pressure reading (finding),BP
+NDABP_COD,163032006,On examination - blood pressure stable (finding),BP
+NDABP_COD,163033001,Lying blood pressure (observable entity),BP
+NDABP_COD,163034007,Standing blood pressure (observable entity),BP
+NDABP_COD,163035008,Sitting blood pressure (observable entity),BP
+NDABP_COD,163036009,On examination - blood pressure decreased (finding),BP
+NDABP_COD,163037000,On examination - blood pressure labile (finding),BP
+NDABP_COD,170581003,On examination - initial high blood pressure (finding),BP
+NDABP_COD,170582005,On examination - check high blood pressure (finding),BP
+NDABP_COD,174255007,Non-invasive diastolic arterial pressure (observable entity),BP
+NDABP_COD,18050000,Increased systolic arterial pressure (finding),BP
+NDABP_COD,18352002,Abnormal systolic arterial pressure (finding),BP
+NDABP_COD,198081000000101,Ambulatory systolic blood pressure (observable entity),BP
+NDABP_COD,198091000000104,Ambulatory diastolic blood pressure (observable entity),BP
+NDABP_COD,2004005,Normal blood pressure (finding),BP
+NDABP_COD,23154005,Increased diastolic arterial pressure (finding),BP
+NDABP_COD,24184005,Increased blood pressure (finding),BP
+NDABP_COD,251070002,Non-invasive systolic arterial pressure (observable entity),BP
+NDABP_COD,251074006,Non-invasive mean arterial pressure (observable entity),BP
+NDABP_COD,251076008,Non-invasive arterial pressure (observable entity),BP
+NDABP_COD,251078009,Post-vasodilatation arterial pressure (observable entity),BP
+NDABP_COD,26014004,Increased mean arterial pressure (finding),BP
+NDABP_COD,271649006,Systolic blood pressure (observable entity),BP
+NDABP_COD,271650006,Diastolic blood pressure (observable entity),BP
+NDABP_COD,271870002,Low blood pressure reading (disorder),BP
+NDABP_COD,313005002,On examination - blood pressure reading: no postural drop (situation),BP
+NDABP_COD,314438006,Minimum systolic blood pressure (observable entity),BP
+NDABP_COD,314439003,Maximum systolic blood pressure (observable entity),BP
+NDABP_COD,314440001,Average systolic blood pressure (observable entity),BP
+NDABP_COD,314441002,Minimum day interval systolic blood pressure (observable entity),BP
+NDABP_COD,314442009,Minimum night interval systolic blood pressure (observable entity),BP
+NDABP_COD,314443004,Maximum night interval systolic blood pressure (observable entity),BP
+NDABP_COD,314444005,Maximum day interval systolic blood pressure (observable entity),BP
+NDABP_COD,314445006,Average night interval systolic blood pressure (observable entity),BP
+NDABP_COD,314446007,Average day interval systolic blood pressure (observable entity),BP
+NDABP_COD,314447003,Minimum 24 hour systolic blood pressure (observable entity),BP
+NDABP_COD,314448008,Maximum 24 hour systolic blood pressure (observable entity),BP
+NDABP_COD,314449000,Average 24 hour systolic blood pressure (observable entity),BP
+NDABP_COD,314451001,Minimum diastolic blood pressure (observable entity),BP
+NDABP_COD,314452008,Maximum diastolic blood pressure (observable entity),BP
+NDABP_COD,314453003,Average diastolic blood pressure (observable entity),BP
+NDABP_COD,314454009,Minimum day interval diastolic blood pressure (observable entity),BP
+NDABP_COD,314455005,Minimum night interval diastolic blood pressure (observable entity),BP
+NDABP_COD,314456006,Minimum 24 hour diastolic blood pressure (observable entity),BP
+NDABP_COD,314457002,Maximum night interval diastolic blood pressure (observable entity),BP
+NDABP_COD,314458007,Maximum day interval diastolic blood pressure (observable entity),BP
+NDABP_COD,314459004,Maximum 24 hour diastolic blood pressure (observable entity),BP
+NDABP_COD,314460009,Average night interval diastolic blood pressure (observable entity),BP
+NDABP_COD,314461008,Average day interval diastolic blood pressure (observable entity),BP
+NDABP_COD,314462001,Average 24 hour diastolic blood pressure (observable entity),BP
+NDABP_COD,314463006,24 hour blood pressure (observable entity),BP
+NDABP_COD,314464000,24 hour systolic blood pressure (observable entity),BP
+NDABP_COD,314465004,24 hour diastolic blood pressure (observable entity),BP
+NDABP_COD,335661000000109,Self measured blood pressure reading (observable entity),BP
+NDABP_COD,364090009,Systemic arterial pressure (observable entity),BP
+NDABP_COD,386534000,Arterial blood pressure (observable entity),BP
+NDABP_COD,386536003,Systemic blood pressure (observable entity),BP
+NDABP_COD,399304008,Systolic blood pressure on admission (observable entity),BP
+NDABP_COD,400974009,Standing systolic blood pressure (observable entity),BP
+NDABP_COD,400975005,Standing diastolic blood pressure (observable entity),BP
+NDABP_COD,407554009,Sitting systolic blood pressure (observable entity),BP
+NDABP_COD,407555005,Sitting diastolic blood pressure (observable entity),BP
+NDABP_COD,407556006,Lying systolic blood pressure (observable entity),BP
+NDABP_COD,407557002,Lying diastolic blood pressure (observable entity),BP
+NDABP_COD,413605002,Average home diastolic blood pressure (observable entity),BP
+NDABP_COD,413606001,Average home systolic blood pressure (observable entity),BP
+NDABP_COD,42689008,Decreased diastolic arterial pressure (finding),BP
+NDABP_COD,49844009,Abnormal diastolic arterial pressure (finding),BP
+NDABP_COD,53813002,Normal diastolic arterial pressure (finding),BP
+NDABP_COD,6797001,Mean blood pressure (observable entity),BP
+NDABP_COD,707303003,Post exercise systolic blood pressure response abnormal (finding),BP
+NDABP_COD,716579001,Baseline systolic blood pressure (observable entity),BP
+NDABP_COD,716632005,Baseline diastolic blood pressure (observable entity),BP
+NDABP_COD,72313002,Systolic arterial pressure (observable entity),BP
+NDABP_COD,723232008,Average blood pressure (observable entity),BP
+NDABP_COD,723235005,Maximum blood pressure (observable entity),BP
+NDABP_COD,723236006,Minimum blood pressure (observable entity),BP
+NDABP_COD,723237002,Non-invasive blood pressure (observable entity),BP
+NDABP_COD,75367002,Blood pressure (observable entity),BP
+NDABP_COD,81010002,Decreased systolic arterial pressure (finding),BP
+NDABP_COD,852291000000105,Maximum mean blood pressure (observable entity),BP
+NDABP_COD,852301000000109,Minimum mean blood pressure (observable entity),BP
+NDABP_COD,928021000000108,Baseline blood pressure (observable entity),BP
+FASPLASGLUC_COD,1003141000000105,Plasma fasting glucose level (observable entity),Fasting glucose
+FASPLASGLUC_COD,58111000237107,Fasting substance concentration of glucose in plasma (observable entity),Fasting glucose
+IFCCHBAM_COD,1049301000000100,Haemoglobin A1c level (diagnostic reference range) - International Federation of Clinical Chemistry and Laboratory Medicine standardised (observable entity),HbA1c
+IFCCHBAM_COD,1049321000000109,Haemoglobin A1c level (monitoring ranges) - International Federation of Clinical Chemistry and Laboratory Medicine standardised (observable entity),HbA1c
+IFCCHBAM_COD,999791000000106,Haemoglobin A1c level - International Federation of Clinical Chemistry and Laboratory Medicine standardised (observable entity),HbA1c
+IFCCHBAM_COD,1971000237103,Substance concentration of haemoglobin A1c diagnostic reference range in blood (observable entity),HbA1c
+IFCCHBAM_COD,6181000237109,Substance concentration of haemoglobin A1c monitoring range in blood (observable entity),HbA1c
+IFCCHBAM_COD,1107481000000106,Substance concentration of haemoglobin A1c in blood (observable entity),HbA1c
+CHOL_COD,1005671000000105,Serum cholesterol level (observable entity),Total cholesterol
+CHOL_COD,1017161000000104,Plasma total cholesterol level (observable entity),Total cholesterol
+CHOL_COD,1083761000000106,Serum fasting total cholesterol level (observable entity),Total cholesterol
+CHOL_COD,1106531000000105,Substance concentration of cholesterol in plasma (observable entity),Total cholesterol
+CHOL_COD,1106541000000101,Substance concentration of cholesterol in serum (observable entity),Total cholesterol
+CHOL_COD,121868005,Total cholesterol measurement (procedure),Total cholesterol
+CHOL_COD,166828006,Serum cholesterol within reference range (finding),Total cholesterol
+CHOL_COD,166830008,Serum cholesterol above reference range (finding),Total cholesterol
+CHOL_COD,166831007,Serum cholesterol very high (finding),Total cholesterol
+CHOL_COD,247801000000106,Serum fasting total cholesterol (procedure),Total cholesterol
+CHOL_COD,315017003,Fasting cholesterol level (procedure),Total cholesterol
+CHOL_COD,994351000000103,Serum total cholesterol level (observable entity),Total cholesterol
+CHOL_COD,850981000000101,Cholesterol level (observable entity),Total cholesterol
+CHOL_COD,853681000000104,Total cholesterol level (observable entity),Total cholesterol
+HDLCCHOL_COD,1005681000000107,Serum high density lipoprotein cholesterol level (observable entity),HDL cholesterol
+HDLCCHOL_COD,1010581000000101,Plasma high density lipoprotein cholesterol level (observable entity),HDL cholesterol
+HDLCCHOL_COD,1026451000000102,Serum fasting high density lipoprotein cholesterol level (observable entity),HDL cholesterol
+HDLCCHOL_COD,1026461000000104,Serum random high density lipoprotein cholesterol level (observable entity),HDL cholesterol
+HDLCCHOL_COD,1028831000000106,Plasma random high density lipoprotein cholesterol level (observable entity),HDL cholesterol
+HDLCCHOL_COD,1028841000000102,Plasma fasting high density lipoprotein cholesterol level (observable entity),HDL cholesterol
+HDLCCHOL_COD,1107661000000104,Substance concentration of high density lipoprotein cholesterol in plasma (observable entity),HDL cholesterol
+HDLCCHOL_COD,1107681000000108,Substance concentration of high density lipoprotein cholesterol in serum (observable entity),HDL cholesterol
+LDLCCHOL_COD,1010591000000104,Plasma low density lipoprotein cholesterol level (observable entity),LDL cholesterol
+LDLCCHOL_COD,1022191000000100,Serum low density lipoprotein cholesterol level (observable entity),LDL cholesterol
+LDLCCHOL_COD,1026471000000106,Serum fasting low density lipoprotein cholesterol level (observable entity),LDL cholesterol
+LDLCCHOL_COD,1026481000000108,Serum random low density lipoprotein cholesterol level (observable entity),LDL cholesterol
+LDLCCHOL_COD,1028851000000104,Plasma random low density lipoprotein cholesterol level (observable entity),LDL cholesterol
+LDLCCHOL_COD,1028861000000101,Plasma fasting low density lipoprotein cholesterol level (observable entity),LDL cholesterol
+LDLCCHOL_COD,1108541000000100,Substance concentration of low density lipoprotein cholesterol in plasma (observable entity),LDL cholesterol
+LDLCCHOL_COD,1108551000000102,Substance concentration of low density lipoprotein cholesterol in serum (observable entity),LDL cholesterol
+LDLCCHOL_COD,1014501000000104,Calculated low density lipoprotein cholesterol level (observable entity),LDL cholesterol
+LDLCCHOL_COD,53981000237105,Substance concentration of low density lipoprotein cholesterol in plasma (observable entity),LDL cholesterol
+LDLCCHOL_COD,55621000237101,Substance concentration of low density lipoprotein cholesterol in serum (observable entity),LDL cholesterol
+TRIGLYC_COD,1005691000000109,Serum triglycerides level (observable entity),Triglycerides
+TRIGLYC_COD,1010601000000105,Plasma triglyceride level (observable entity),Triglycerides
+TRIGLYC_COD,1026491000000105,Serum fasting triglyceride level (observable entity),Triglycerides
+TRIGLYC_COD,1026501000000104,Serum random triglyceride level (observable entity),Triglycerides
+TRIGLYC_COD,1028871000000108,Plasma random triglyceride level (observable entity),Triglycerides
+TRIGLYC_COD,1031321000000109,Plasma fasting triglyceride level (observable entity),Triglycerides
+TRIGLYC_COD,1109821000000101,Substance concentration of triglyceride in plasma (observable entity),Triglycerides
+TRIGLYC_COD,1109831000000104,Substance concentration of triglyceride in serum (observable entity),Triglycerides
+TRIGLYC_COD,850991000000104,Triglyceride level (observable entity),Triglycerides
+TRIGLYC_COD,1461000237101,Substance concentration of triglyceride in serum (observable entity),Triglycerides
+EGFR_COD,1011481000000105,Estimated glomerular filtration rate using creatinine Chronic Kidney Disease Epidemiology Collaboration equation per 1.73 square metres (observable entity),eGFR
+EGFR_COD,1011491000000107,Estimated glomerular filtration rate using cystatin C Chronic Kidney Disease Epidemiology Collaboration equation per 1.73 square metres (observable entity),eGFR
+EGFR_COD,1020291000000106,Glomerular filtration rate calculated by abbreviated Modification of Diet in Renal Disease Study Group calculation (observable entity),eGFR
+EGFR_COD,857971000000104,Estimated glomerular filtration rate using Chronic Kidney Disease Epidemiology Collaboration formula (observable entity),eGFR
+EGFR_COD,996231000000108,Glomerular filtration rate calculated by abbreviated Modification of Diet in Renal Disease Study Group calculation adjusted for African American origin (observable entity),eGFR
+EGFR_COD,1107411000000104,Estimated glomerular filtration rate by laboratory calculation (observable entity),eGFR
+EGFR_COD,80274001,Glomerular filtration rate (observable entity),eGFR
+EGFR_COD,857981000000102,Estimated glomerular filtration rate using Chronic Kidney Disease Epidemiology Collaboration formula per 1.73 square metres ,eGFR
+EGFR_COD,963601000000106,Estimated glomerular filtration rate using cystatin C Chronic Kidney Disease Epidemiology Collaboration equation (observable entity),eGFR
+EGFR_COD,963611000000108,Estimated glomerular filtration rate using cystatin C per 1.73 square metres ,eGFR
+EGFR_COD,963621000000102,Estimated glomerular filtration rate using creatinine Chronic Kidney Disease Epidemiology Collaboration equation (observable entity),eGFR
+EGFR_COD,963631000000100,Estimated glomerular filtration rate using serum creatinine per 1.73 square metres ,eGFR
+LFT_COD,1000621000000104,Serum alkaline phosphatase level (observable entity),LFT
+LFT_COD,1000821000000103,Serum albumin level (observable entity),LFT
+LFT_COD,1000881000000102,Serum aspartate aminotransferase level (observable entity),LFT
+LFT_COD,1000891000000100,Plasma aspartate transaminase level (observable entity),LFT
+LFT_COD,1013041000000106,Plasma alkaline phosphatase level (observable entity),LFT
+LFT_COD,1013211000000103,Plasma alanine aminotransferase level (observable entity),LFT
+LFT_COD,1013361000000105,Plasma albumin level (observable entity),LFT
+LFT_COD,1018251000000107,Serum alanine aminotransferase level (observable entity),LFT
+LFT_COD,1026761000000106,Total bilirubin level (observable entity),LFT
+LFT_COD,1031101000000102,Aspartate aminotransferase level (observable entity),LFT
+LFT_COD,1105851000000108,Enzyme activity of alanine aminotransferase in plasma (observable entity),LFT
+LFT_COD,1105861000000106,Mass concentration of albumin in serum (observable entity),LFT
+LFT_COD,1106031000000104,Mass concentration of albumin in plasma (observable entity),LFT
+LFT_COD,1106041000000108,Enzyme activity of alkaline phosphatase in plasma (observable entity),LFT
+LFT_COD,1106051000000106,Enzyme activity of alkaline phosphatase in serum (observable entity),LFT
+LFT_COD,1106071000000102,Enzyme activity of aspartate aminotransferase in serum (observable entity),LFT
+LFT_COD,1106081000000100,Enzyme activity of alanine aminotransferase in serum (observable entity),LFT
+LFT_COD,1106681000000105,Enzyme activity of aspartate aminotransferase in plasma (observable entity),LFT
+LFT_COD,1107221000000109,Substance concentration of total bilirubin in serum (observable entity),LFT
+LFT_COD,1107231000000106,Substance concentration of total bilirubin in plasma (observable entity),LFT
+LFT_COD,997561000000103,Plasma total bilirubin level (observable entity),LFT
+LFT_COD,997591000000109,Serum total bilirubin level (observable entity),LFT
+LFT_COD,997611000000101,Total alkaline phosphatase level (observable entity),LFT
+LFT_COD,999691000000104,Serum bilirubin level (observable entity),LFT
+LFT_COD,1301000237108,Catalytic activity of alanine aminotransferase in serum (observable entity),LFT
+LFT_COD,14551000237101,Substance concentration of total bilirubin in plasma (observable entity),LFT
+LFT_COD,15331000237104,Substance concentration of total bilirubin in serum (observable entity),LFT
+LFT_COD,3391000237104,Catalytic activity of alkaline phosphatase liver isoenzyme in serum (observable entity),LFT
+LFT_COD,4391000237101,Catalytic activity of alkaline phosphatase bile isoenzyme in serum (observable entity),LFT
+LFT_COD,54001000237104,Arbitrary concentration of alkaline phosphatase bone isoenzyme in plasma (observable entity),LFT
+LFT_COD,55001000237100,Substance concentration of alkaline phosphatase liver isoenzyme in plasma (observable entity),LFT
+LFT_COD,56471000237106,Arbitrary concentration of alkaline phosphatase biliary isoenzyme in plasma (observable entity),LFT
