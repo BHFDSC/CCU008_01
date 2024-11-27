@@ -1,11 +1,14 @@
-# Impact of the COVID-19 pandemic on the routine measurement of cardiometabolic disease risk factors in primary care in England
+# Routine measurement of cardiometabolic disease risk factors in primary care in England before, during, and after the COVID-19 pandemic: A population based cohort study
+
+**Frederick K. Ho, Caroline Dale, Mehrdad A. Mizani, Thomas Bolton, Ewan R. Pearson, Jonathan Valabhji, Christian Delles, Paul Welsh, Shinya Nakada, Daniel Mackay, Jill P. Pell, Chris Tomlinson, Steffen E. Petersen, Benjamin Bray, Mark Ashworth, Kazem Rahimi, Mamas Mamas, Julian Halcox, Cathie Sudlow, Reecha Sofat, Naveed Sattar, on behalf of the CVD-COVID-UK/COVID-IMPACT Consortium**
 
 ## Project description
 
 The COVID-19 pandemic reduced incident prescriptions for preventative cardiovascular disease (CVD) medicines, which could in part be related to reduced risk factor measurements. We examined to what extent the number of measurements of cardiometabolic risk factors (e.g., blood pressure, cholesterol, HbA1c) were impacted by the COVID-19 pandemic, and whether these have recovered to expected levels.
 
 ## How to cite this work
-> Citation details to follow
+
+Ho FK, Dale C, Mizani MA, Bolton T,  Pearson ER, Valabhji J, et al. (2024) Routine measurement of cardiometabolic disease risk factors in primary care in England before, during, and after the COVID-19 pandemic: A population based cohort study. PLoS Med 21(11): e1004485. https://doi.org/10.1371/journal.pmed.1004485
 
 ## Contents
 
